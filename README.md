@@ -68,3 +68,19 @@ Each essay is stored as a document with the following structure:
   }
 }
 ```
+
+## How to use
+Test with `test_essays.json` and then selecting option 3 (Import Essays from JSON) from your application's main menu.
+
+This test file will help you verify that:
+
+Your JSON parsing works correctly
+- MongoDB can properly store and retrieve the essay documents
+- Your search functionality can filter essays by tags (like "helpful" or "unhelpful")
+- Your usefulness rating queries work properly
+
+Once you've imported these mock essays, you can test queries such as:
+
+- Find all essays with "helpful" introductions
+- Find all essays with "unhelpful" sections
+- Find sections with usefulness ratings of 4 or higher
