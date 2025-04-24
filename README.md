@@ -1,86 +1,101 @@
-# Essay Indexer API
+# rateDMP
+
+A command-line interface (CLI) application for rating and evaluating Data Management Plans (DMPs) written in Rust.
 
 ## Overview
 
-Essay Indexer is a Rust application that provides a database system for indexing academic essays and their sections. The system allows users to tag essay sections with descriptive keywords (like "helpful" or "unhelpful") and assign usefulness ratings, making it easier to search and retrieve specific content.
+rateDMP is a tool designed to help researchers, data managers, and institutional administrators evaluate the quality of Data Management Plans through a structured rating system. The application focuses on section-specific ratings, tags, and comments rather than storing the full content of DMPs.
 
 ## Features
 
-- **MongoDB Integration**: Store and retrieve essays using a flexible document-based model
-- **Section-Level Tagging**: Mark individual sections of essays with keywords for improved searchability
-- **Usefulness Ratings**: Assign ratings (1-5) to essay sections to indicate their quality or relevance
-- **Command-Line Interface**: Easy-to-use CLI for managing essay data
-- **Import/Export**: JSON import and export functionality for data backup and migration
-- **REST API**: HTTP endpoints for programmatic access to the essay database
+- **DMP Rating Management**: Add, search, and update ratings for DMPs
+- **Section-Based Evaluation**: Rate specific sections of DMPs (e.g., Data Description, Documentation & Metadata)
+- **Tags and Comments**: Add tags and detailed comments to each section
+- **Subsections Support**: Create hierarchical ratings with nested subsections
+- **Search Capabilities**: Find DMPs by:
+  - Section tags
+  - Section ratings
+  - Related entities (datasets, publications, software)
+- **Export/Import**: Save and load DMP ratings in JSON format
+- **Identifier Support**: Reference DMPs and related resources using DOIs and other persistent identifiers
 
-## Getting Started
+## Installation
 
 ### Prerequisites
 
-- Rust (1.56.0 or newer)
-- MongoDB (4.4 or newer)
-- Cargo (Rust's package manager)
+- Rust (latest stable version)
+- MongoDB (running locally or accessible via network)
 
-### Installation
-
-1. Clone this repository
-```bash
-   git clone https://github.com/jibarozzo/essay-indexer.git
-   cd essay-indexer
-```
-2. Build the project
+### Building from Source
 
 ```bash
+git clone https://github.com/jibarozzo/rateDMP.git
+cd rateDMP
 cargo build --release
 ```
-3. Make sure MongoDB is running
+
+The compiled binary will be available at `target/release/ratedmp`.
+
+## Usage
+
+### Starting the Application
+
 ```bash
-# On most systems
-sudo systemctl start mongodb
+cargo run
 ```
 
-4. Run the application
+### Main Menu Options
 
-```bash
-cargo run --release
-```
-## Database Schema
-Each essay is stored as a document with the following structure:
+1. **Manage DMP Ratings**: Add new ratings or search existing ones
+2. **Export DMP Ratings**: Save all ratings to a JSON file
+3. **Import DMP Ratings**: Load ratings from a JSON file
+4. **Exit**: Close the application
 
-```JSON
-{
-  "_id": ObjectId,
-  "title": "Essay Title",
-  "author": "Author Name",
-  "date": ISODate,
-  "sections": [
-    {
-      "title": "Introduction",
-      "content": "The introduction content...",
-      "tags": ["helpful", "concise"],
-      "usefulness_rating": 5
-    },
-    ...
-  ],
-  "metadata": {
-    "word_count": 2500,
-    "categories": ["philosophy", "ethics"]
-  }
-}
-```
+### Working with DMP Ratings
 
-## How to use
-Test with `test_essays.json` and then selecting option 3 (Import Essays from JSON) from your application's main menu.
+When choosing "Manage DMP Ratings" you can:
 
-This test file will help you verify that:
+1. **Add a new DMP rating**:
+   - Enter DMP metadata (title, identifiers, authors)
+   - Rate individual sections (1-5 scale)
+   - Add tags and comments
+   - Include optional subsections
 
-Your JSON parsing works correctly
-- MongoDB can properly store and retrieve the essay documents
-- Your search functionality can filter essays by tags (like "helpful" or "unhelpful")
-- Your usefulness rating queries work properly
+2. **Search DMPs by section tag**:
+   - Find DMPs containing specific tags in their sections
 
-Once you've imported these mock essays, you can test queries such as:
+3. **Search DMPs by section rating**:
+   - Find DMPs with sections rated above a specified threshold
 
-- Find all essays with "helpful" introductions
-- Find all essays with "unhelpful" sections
-- Find sections with usefulness ratings of 4 or higher
+4. **Search DMPs by related entity**:
+   - Locate DMPs connected to specific datasets, publications, or software
+   - Search using persistent identifiers (DOIs, etc.)
+
+5. **Update DMP section rating**:
+   - Modify ratings for existing DMPs
+
+## Data Model
+
+The application uses a structured data model that includes:
+
+- **Core DMP Metadata**: Title, identifiers, authors, project information
+- **Sections**: Rating, tags, comments for standard DMP sections
+- **Subsections**: More detailed ratings for components within sections
+- **Relationships**: Links to related DMPs, datasets, publications, and software
+
+## Contributing
+
+Contributions to rateDMP are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Future Development
+
+Future enhancements may include:
+- Web interface for easier interaction
+- Report generation capabilities
+- Analytics for institutional DMP assessment
+- Enhanced FAIR principles evaluation
+- Integration with external repositories
